@@ -1,23 +1,23 @@
 import 'package:firebase/Controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../Widget/text_button.dart';
-import '../Widget/text_form_field.dart';
+import '../../Widget/text_button.dart';
+import '../../Widget/text_form_field.dart';
 
-class ForgotScreen extends StatefulWidget {
-  const ForgotScreen({Key? key}) : super(key: key);
+class PhoneScreen extends StatefulWidget {
+  const PhoneScreen({Key? key}) : super(key: key);
 
   @override
-  State<ForgotScreen> createState() => _ForgotScreenState();
+  State<PhoneScreen> createState() => _PhoneScreenState();
 }
 
-class _ForgotScreenState extends State<ForgotScreen> {
+class _PhoneScreenState extends State<PhoneScreen> {
   final authController = Get.put(AuthController());
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
   @override
   void dispose() {
-    _emailController.dispose();
+    _phoneController.dispose();
     super.dispose();
   }
 
@@ -25,7 +25,7 @@ class _ForgotScreenState extends State<ForgotScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Forgot Page"),
+        title: const Text("Phone Number"),
       ),
       body: SafeArea(
         child: Form(
@@ -36,23 +36,21 @@ class _ForgotScreenState extends State<ForgotScreen> {
             children: [
               const SizedBox(height: 10),
               buildTextFormField(
-                  hintText: "Email",
-                  controller: _emailController,
+                  hintText: "phone number",
+                  controller: _phoneController,
                   validate: (value) {
-                    if (!GetUtils.isEmail(value!)) {
-                      return 'please provide a valid email';
+                    if (!GetUtils.isPhoneNumber(value!)) {
+                      return 'please enter valid phone number';
                     }
                     return null;
                   },
                   onChanged: (value) {}),
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
               TextBottun(
-                text: "Forgot",
+                text: "Phone Number",
                 clickCallback: () {
-                  if (_formKey.currentState!.validate()) {
-                    authController.forgotPassword(
-                        _emailController.text.toString(), context);
-                  }
+                  authController.phoneNumber(
+                      _phoneController.text.toString(), context);
                 },
               ),
             ],
